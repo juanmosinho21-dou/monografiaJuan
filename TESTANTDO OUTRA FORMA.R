@@ -21,7 +21,7 @@ BANCOS <- Empresas_CVM2 %>%
 library(GetDFPData2)
 Resultados_Contábeis <- GetDFPData2:::get_itr_data(
   companies_cvm_codes = BANCOS$CD_CVM,
-  first_year = 2000,
+  first_year = 2010,
   last_year = lubridate::year(Sys.Date()),
   type_docs = c("BPA", "BPP", "DRE"),
   type_format = ("con"),
@@ -68,9 +68,12 @@ Lucro_Liquido <- Colocandodias %>%
 Patrimonio_Liquido <- Resultados_Contábeis[["DF Consolidado - Balanço Patrimonial Passivo"]] %>%
   filter(grepl("Patrimônio Líquido Consolidado", DS_CONTA, ignore.case = TRUE))
 
-Patrimonio_Liquido_CD <- Resultados_Contábeis[["DF Consolidado - Balanço Patrimonial Passivo"]] %>%
+Patrimonio_Liquido_1 <- Resultados_Contábeis[["DF Consolidado - Balanço Patrimonial Passivo"]] %>%
   filter(CD_CONTA == "2.08")
 
+
+Patrimonio_Liquido_2 <- Resultados_Contábeis[["DF Consolidado - Balanço Patrimonial Passivo"]] %>%
+  filter(CD_CONTA == "2.07")
 
 Patri_Liqu_Consil <- setdiff(ROE_resumo$Nome,Patrimonio_Liquido_CD$DENOM_CIA)
 Patri_Liqu_Consil <- interaction(ROE_resumo$Nome,Patrimonio_Liquido$DENOM_CIA)
